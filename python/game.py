@@ -102,8 +102,8 @@ def get_neighborhood(gamefield, r_index, c_index):
 
     left  = gamefield[r_index][calc_bounds(c_index-1, "c")]
     right = gamefield[r_index][calc_bounds(c_index+1, "c")]
-    
-    neighbor_sum = above + below + left + right 
+
+    neighbor_sum = above + below + left + right
     return neighbor_sum
 
 def check_bounds_column(index):
@@ -121,7 +121,7 @@ def calc_bounds(index, type_of):
 
 def init_game():
     """
-    Create gamefield 
+    Create 2d gamefield
     """
     gamefield = [[0 for i in range(NR_COLS)] for j in range(NR_ROWS)]
     random_startvalues(gamefield)
@@ -133,7 +133,7 @@ def random_startvalues(game):
     """
     for row in range(NR_ROWS):
         for col in range(NR_COLS):
-            if randint(1, 10) > 6:
+            if randint(1, 10) > 6:# Arbitrary check if value should be 1 or not
                 game[row][col] = 1
 
 def prettyprint(game):
