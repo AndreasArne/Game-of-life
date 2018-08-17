@@ -151,11 +151,12 @@ def init_game_from_file():
     Create 2d gamefield from file 
     """
     global NR_ROWS, NR_COLS
-    with open("patterns/" + argv[1], "r") as fh:
+    file_path = "patterns/{}.json".format(argv[1])
+    with open(file_path, "r") as fh:
         gamefield = json.load(fh)
 
-    NR_COLS = len(gamefield)
-    NR_ROWS = len(gamefield[0])
+    NR_ROWS = len(gamefield)
+    NR_COLS = len(gamefield[0])
     return gamefield
 
 def check_if_cmdinp():
