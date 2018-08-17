@@ -5,6 +5,8 @@ Implementation of Conway's game of life
 """
 from random import randint
 from time import sleep
+from sys import argv
+import json
 
 NR_ROWS = 20
 NR_COLS = 20
@@ -15,7 +17,8 @@ def start():
     """
     Entry point for game.
     """
-    gamefield = init_game()
+    
+    gamefield = init_game_from_file() if check_if_cmdinp() else init_game()
     prettyprint(gamefield)
     game_loop(gamefield)
 
@@ -142,6 +145,27 @@ def prettyprint(game):
     """
     print(chr(27) + "[2J" + chr(27) + "[;H")
     print('\n'.join([' '.join([str(col) for col in row]) for row in game]))
+
+def init_game_from_file():
+    """
+    Create 2d gamefield from file 
+    """
+    global NR_ROWS, NR_COLS
+    with open("patterns/" + argv[1], "r") as fh:
+        gamefield = json.load(fh)
+
+    NR_COLS = len(gamefield)
+    NR_ROWS = len(gamefield[0])
+    return gamefield
+
+def check_if_cmdinp():
+    """
+    Check if there is a commandline argument for reading patterns from file
+    """
+    if len(argv) > 1:
+        return argv[1]
+    else:
+        return 0
 
 if __name__ == "__main__":
     start()
