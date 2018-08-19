@@ -17,7 +17,7 @@ def start():
     """
     Entry point for game.
     """
-    
+
     gamefield = init_game_from_file() if check_if_cmdinp() else init_game()
     prettyprint(gamefield)
     game_loop(gamefield)
@@ -63,8 +63,6 @@ def check_rules(alive, n_value):
         # Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
         return 4
     else:
-        # print("This shouldn't be!")
-        # print(alive, n_value)
         return -1
 
 def activate_rules(gamefield, tick):
@@ -96,7 +94,7 @@ def get_neighborhood(gamefield, r_index, c_index):
     """
     calculate neighborhood value for col to check rules
     """
-    if check_bounds_column(c_index):
+    if check_bounds_column(c_index): # needed because of slicing
         above = sum(gamefield[calc_bounds(r_index-1, "r")][c_index-1:c_index+1], gamefield[calc_bounds(r_index-1, "r")][0])
         below = sum(gamefield[calc_bounds(r_index+1, "r")][c_index-1:c_index+1], gamefield[calc_bounds(r_index+1, "r")][0])
     else:
@@ -148,7 +146,7 @@ def prettyprint(game):
 
 def init_game_from_file():
     """
-    Create 2d gamefield from file 
+    Create 2d gamefield from file
     """
     global NR_ROWS, NR_COLS
     file_path = "patterns/{}.json".format(argv[1])
