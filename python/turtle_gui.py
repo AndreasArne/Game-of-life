@@ -18,6 +18,7 @@ T_CONF = {
 def config_turtle(t):
     t.shape(T_CONF["shape"])
     t.color(T_CONF["hide_color"])
+    t.speed("fastest")
 
 
 
@@ -61,6 +62,7 @@ def config( nr_rows, nr_cols, width=500, height=500, bgcolor="black"):
     SCREEN.setworldcoordinates(0, width, height, 0)
     SCREEN.colormode(255)
     SCREEN.bgcolor(bgcolor)
+    SCREEN.tracer(0, 0) # turn of animations and delay
 
     create_turtles(nr_rows, nr_cols)
     # hide_all_turtles()
@@ -82,6 +84,7 @@ def update_board(gamefield):
     for x, row in enumerate(gamefield):
         for y, value in enumerate(row):
             update_turtle(x, y, value)
+    SCREEN.update()
 
 
 
