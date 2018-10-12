@@ -63,6 +63,7 @@ def config( nr_rows, nr_cols, width=500, height=500, bgcolor="black"):
     SCREEN.colormode(255)
     SCREEN.bgcolor(bgcolor)
     SCREEN.tracer(0, 0) # turn of animations and delay
+    SCREEN.title("Game of life")
 
     create_turtles(nr_rows, nr_cols)
     # hide_all_turtles()
