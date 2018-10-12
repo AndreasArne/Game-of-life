@@ -8,18 +8,29 @@ from time import sleep
 from sys import argv
 import json
 
-NR_ROWS = 20
-NR_COLS = 20
+import turtle_gui as gui
+
+NR_ROWS = 10
+NR_COLS = 10
 ALIVE_V = 1
 DEAD_V  = 0
+SLEEP_TIME = 0.5
+
+def create_gamefield():
+    """
+    Return a 2d array as gamefiled
+    """
+    return init_game_from_file(argv[1]) if check_if_cmdinp() else init_game()
 
 def start():
     """
     Entry point for game.
     """
+    gamefield = create_gamefield()
+    gui.config(NR_ROWS, NR_COLS)
+    gui.start()
+    gui.update_board(gamefield)
 
-    gamefield = init_game_from_file() if check_if_cmdinp() else init_game()
-    prettyprint(gamefield)
     game_loop(gamefield)
 
 def game_loop(gamefield):
@@ -27,9 +38,10 @@ def game_loop(gamefield):
     Forever loop for game
     """
     while(True):
-        prettyprint(gamefield)
+        # prettyprint(gamefield)
+        sleep(SLEEP_TIME)
         tick(gamefield)
-        sleep(1)
+        gui.update_board(gamefield)
 
 def tick(gamefield):
     """
@@ -144,12 +156,12 @@ def prettyprint(game):
     print(chr(27) + "[2J" + chr(27) + "[;H")
     print('\n'.join([' '.join([str(col) for col in row]) for row in game]))
 
-def init_game_from_file():
+def init_game_from_file(filename):
     """
     Create 2d gamefield from file
     """
     global NR_ROWS, NR_COLS
-    file_path = "patterns/{}.json".format(argv[1])
+    file_path = "patterns/{}.json".format(filename)
     with open(file_path, "r") as fh:
         gamefield = json.load(fh)
 
