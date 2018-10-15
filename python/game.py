@@ -10,8 +10,8 @@ import json
 
 import turtle_gui as gui
 
-NR_ROWS = 10
-NR_COLS = 10
+NR_ROWS = 20
+NR_COLS = 20
 ALIVE_V = 1
 DEAD_V  = 0
 SLEEP_TIME = 0.5
@@ -27,6 +27,7 @@ def start():
     Entry point for game.
     """
     gamefield = create_gamefield()
+
     gui.config(NR_ROWS, NR_COLS)
     gui.start()
     gui.update_board(gamefield)
@@ -136,22 +137,29 @@ def init_game(filename=""):
     """
     Create 2d gamefield
     """
-    gamefield = [[0 for i in range(NR_COLS)] for j in range(NR_ROWS)]
-    if filename:
-        startvalues_fromfile(gamefield, filename)
-    else:
-        random_startvalues(gamefield)
 
+    if filename:
+        gamefield = startvalues_fromfile(filename)
+    else:
+        gamefield = random_startvalues()
     return gamefield
 
-def random_startvalues(game):
+def create_2dlist():
+    """
+    create 2d list used for gamefield
+    """
+    return [[0 for i in range(NR_COLS)] for j in range(NR_ROWS)]
+
+def random_startvalues():
     """
     Randomize start values on the gamefield
     """
+    gamefield = create_2dlist()
     for row in range(NR_ROWS):
         for col in range(NR_COLS):
             if randint(1, 10) > 6:# Arbitrary check if value should be 1 or not
-                game[row][col] = 1
+                gamefield[row][col] = 1
+    return gamefield
 
 def prettyprint(game):
     """
@@ -161,28 +169,43 @@ def prettyprint(game):
     print('\n'.join([' '.join([str(col) for col in row]) for row in game]))
 
 def insert_pattern(gamefield, pattern):
-    start = (NR_COLS // 2) - (len(pattern[0]) // 2)
-    stop = len(pattern) - 1
-    print(start, stop)
-    for row in range(NR_ROWS):
-        gamefield[row][start:stop] = pattern[row]  
+    """
+    Inject pattern into center of the gamefield
+    """
+    rstart = (NR_ROWS // 2) - (len(pattern) // 2)
+    rstop = rstart + len(pattern)
 
-def startvalues_fromfile(gamefield, filename):
+    cstart = (NR_COLS // 2) - (len(pattern[0]) // 2)
+    cstop = cstart + len(pattern[0])
+
+    count = 0
+    for row in range(rstart, rstop):
+        gamefield[row][cstart:cstop] = pattern[count]
+        count += 1
+    return gamefield
+
+def get_pattern(filename):
+    """
+    Create 2d gamefield from file
+    """
+    file_path = "patterns/{}.json".format(filename)
+    with open(file_path, "r") as fh:
+        pattern = json.load(fh)
+    return pattern
+
+def startvalues_fromfile(filename):
     """
     Create 2d gamefield from file
     """
     global NR_ROWS, NR_COLS
-    file_path = "patterns/{}.json".format(filename)
-    with open(file_path, "r") as fh:
-        pattern = json.load(fh)
-    
-    if len(pattern) > NR_ROWS:
+
+    pattern = get_pattern(filename)
+    if len(pattern) > NR_ROWS or len(pattern[0]) > NR_COLS:
         NR_ROWS = len(pattern)
         NR_COLS = len(pattern[0])
+        return pattern
     else:
-        insert_pattern(gamefield, pattern)
-
-    return gamefield
+        return insert_pattern(create_2dlist(), pattern)
 
 def check_if_cmdinp():
     """
