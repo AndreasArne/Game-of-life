@@ -12,13 +12,15 @@ T_CONF = {
         "hide_color": "grey",
         "shape": "square",
         "size": 20,
-        "border_size": 4
+        "border_size": 5
     }
 
 def config_turtle(t):
+    t.speed("fastest")
     t.shape(T_CONF["shape"])
     t.color(T_CONF["hide_color"])
-    t.speed("fastest")
+    t.resizemode("user")
+    t.shapesize(0.95, 0.95)
 
 
 
@@ -56,10 +58,13 @@ def hide_all_turtles():
 
 
 
-def config( nr_rows, nr_cols, width=500, height=500, bgcolor="black"):
+def config( nr_rows, nr_cols, bgcolor="black"):
+    height = T_CONF["size"] * nr_rows + (T_CONF["border_size"] * nr_rows)
+    width = T_CONF["size"] * nr_cols + (T_CONF["border_size"] * nr_cols)
+
     SCREEN.reset()
     SCREEN.setup(width, height)
-    SCREEN.setworldcoordinates(0, width, height, 0)
+    SCREEN.setworldcoordinates(-T_CONF["size"], width, height, -T_CONF["size"])
     SCREEN.colormode(255)
     SCREEN.bgcolor(bgcolor)
     SCREEN.tracer(0, 0) # turn of animations and delay
