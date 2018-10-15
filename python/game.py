@@ -20,7 +20,7 @@ def create_gamefield():
     """
     Return a 2d array as gamefiled
     """
-    return init_game_from_file(argv[1]) if check_if_cmdinp() else init_game()
+    return init_game(check_if_cmdinp())
 
 def start():
     """
@@ -132,12 +132,16 @@ def calc_bounds(index, type_of):
     """
     return index % NR_ROWS if type_of == "r" else index % NR_COLS
 
-def init_game():
+def init_game(filename=""):
     """
     Create 2d gamefield
     """
     gamefield = [[0 for i in range(NR_COLS)] for j in range(NR_ROWS)]
-    random_startvalues(gamefield)
+    if filename:
+        startvalues_fromfile(gamefield, filename)
+    else:
+        random_startvalues(gamefield)
+
     return gamefield
 
 def random_startvalues(game):
@@ -156,17 +160,28 @@ def prettyprint(game):
     print(chr(27) + "[2J" + chr(27) + "[;H")
     print('\n'.join([' '.join([str(col) for col in row]) for row in game]))
 
-def init_game_from_file(filename):
+def insert_pattern(gamefield, pattern):
+    start = (NR_COLS // 2) - (len(pattern[0]) // 2)
+    stop = len(pattern) - 1
+    print(start, stop)
+    for row in range(NR_ROWS):
+        gamefield[row][start:stop] = pattern[row]  
+
+def startvalues_fromfile(gamefield, filename):
     """
     Create 2d gamefield from file
     """
     global NR_ROWS, NR_COLS
     file_path = "patterns/{}.json".format(filename)
     with open(file_path, "r") as fh:
-        gamefield = json.load(fh)
+        pattern = json.load(fh)
+    
+    if len(pattern) > NR_ROWS:
+        NR_ROWS = len(pattern)
+        NR_COLS = len(pattern[0])
+    else:
+        insert_pattern(gamefield, pattern)
 
-    NR_ROWS = len(gamefield)
-    NR_COLS = len(gamefield[0])
     return gamefield
 
 def check_if_cmdinp():
