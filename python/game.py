@@ -154,6 +154,8 @@ def random_startvalues():
     """
     Randomize start values on the gamefield
     """
+    assert NR_ROWS == NR_COLS, "Number of rows and columns need to be the same!"
+
     gamefield = create_2dlist()
     for row in range(NR_ROWS):
         for col in range(NR_COLS):
@@ -161,12 +163,12 @@ def random_startvalues():
                 gamefield[row][col] = 1
     return gamefield
 
-def prettyprint(game):
+def prettyprint(gamefield):
     """
     Make a pretty print of the gamefield.
     """
     print(chr(27) + "[2J" + chr(27) + "[;H")
-    print('\n'.join([' '.join([str(col) for col in row]) for row in game]))
+    print('\n'.join([' '.join([str(col) for col in row]) for row in gamefield]))
 
 def insert_pattern(gamefield, pattern):
     """
@@ -200,10 +202,12 @@ def startvalues_fromfile(filename):
     global NR_ROWS, NR_COLS
 
     pattern = get_pattern(filename)
-    if len(pattern) > NR_ROWS or len(pattern[0]) > NR_COLS:
+    if len(pattern) >= NR_ROWS  and len(pattern) == len(pattern[0]):
         NR_ROWS = len(pattern)
         NR_COLS = len(pattern[0])
         return pattern
+    elif (len(pattern) != len(pattern[0])) and (len(pattern) > NR_ROWS or len(pattern[0]) > NR_COLS):
+        raise ValueError("Pattern does not have same size and is bigger than gamefield")
     else:
         return insert_pattern(create_2dlist(), pattern)
 
