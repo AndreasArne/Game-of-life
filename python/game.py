@@ -16,17 +16,21 @@ ALIVE_V = 1
 DEAD_V  = 0
 SLEEP_TIME = 0.5
 
-def create_gamefield():
+def create_gamefield(filename=""):
     """
     Return a 2d array as gamefiled
     """
-    return init_game(check_if_cmdinp())
+    if filename:
+        gamefield = startvalues_fromfile(filename)
+    else:
+        gamefield = random_startvalues()
+    return gamefield
 
 def start():
     """
     Entry point for game.
     """
-    gamefield = create_gamefield()
+    gamefield = create_gamefield(check_if_cmdinp())
 
     gui.config(NR_ROWS, NR_COLS)
     gui.start()
@@ -132,17 +136,6 @@ def calc_bounds(index, type_of):
     calculate value if out of bounds with modulus
     """
     return index % NR_ROWS if type_of == "r" else index % NR_COLS
-
-def init_game(filename=""):
-    """
-    Create 2d gamefield
-    """
-
-    if filename:
-        gamefield = startvalues_fromfile(filename)
-    else:
-        gamefield = random_startvalues()
-    return gamefield
 
 def create_2dlist():
     """

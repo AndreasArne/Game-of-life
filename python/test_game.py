@@ -6,7 +6,7 @@ Tests the implementation of Conway's game of life
 import unittest
 import game
 
-class TestGamefield(unittest.TestCase):
+class TestCreateGamefield(unittest.TestCase):
     """
     Test for creating gamefield in game.py
     """
@@ -14,15 +14,22 @@ class TestGamefield(unittest.TestCase):
         game.NR_COLS = 20
         game.NR_ROWS = 20
 
+    def assert_create_random_gamefield(self, gamefield):
+        """
+        Assert a gamefield created with random values.
+        Used by multiple tests that should have same result
+        """
+        self.assertIsInstance(gamefield, type([]))
+        self.assertEqual(len(gamefield), game.NR_ROWS)
+        self.assertIsInstance(gamefield[0], type([]))
+        self.assertEqual(len(gamefield[0]), game.NR_COLS)
+
     def test_a1_create_random(self):
         """
         Test creation of gamefield with random startvalue
         """
         gamefield = game.random_startvalues()
-        self.assertIsInstance(gamefield, type([]))
-        self.assertEqual(len(gamefield), game.NR_ROWS)
-        self.assertIsInstance(gamefield[0], type([]))
-        self.assertEqual(len(gamefield[0]), game.NR_COLS)
+        self.assert_create_random_gamefield(gamefield)
 
     def test_a2_create_random_fail(self):
         """
@@ -232,6 +239,12 @@ class TestGamefield(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             gamefield = game.startvalues_fromfile("no_such_file")
 
+    def test_e1_create_gamefield_random(self):
+        """
+        Test the create_gamefield() function
+        """
+        gamefield = game.create_gamefield()
+        self.assert_create_random_gamefield(gamefield)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
