@@ -1,23 +1,24 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Tests the implementation of Conway's game of life
+Tests the functions used to create the gamefield used in Conway's game of life
 """
 from sys import argv, path
 import os
 import unittest
 path.insert(1, os.path.join(path[0], '..'))
-import game
+import create_gamefield as cg
+import config
 
 class TestCreateGamefield(unittest.TestCase):
     """
-    Test the different functions used for creating the gamefield in game.py
+    Test the different functions used for creating the gamefield in create_gamefield.py
     """
 
     def setUp(self):
-        game.NR_COLS = 20
-        game.NR_ROWS = 20
-        game.PATTERN_PATH = "../patterns"
+        config.NR_COLS = 20
+        config.NR_ROWS = 20
+        config.PATTERN_PATH = "../patterns"
 
     def assert_structue_of_gamefield(self, gamefield):
         """
@@ -25,38 +26,38 @@ class TestCreateGamefield(unittest.TestCase):
         Used by multiple tests that should have same result
         """
         self.assertIsInstance(gamefield, type([]))
-        self.assertEqual(len(gamefield), game.NR_ROWS)
+        self.assertEqual(len(gamefield), config.NR_ROWS)
         self.assertIsInstance(gamefield[0], type([]))
-        self.assertEqual(len(gamefield[0]), game.NR_COLS)
+        self.assertEqual(len(gamefield[0]), config.NR_COLS)
 
     def test_a1_create_2dlist(self):
         """
         Testing creat_2dlist function
         """
-        gamefield = game.create_2dlist()
+        gamefield = cg.create_2dlist()
         self.assert_structue_of_gamefield(gamefield)
 
     def test_b1_random_startvalues(self):
         """
         Test creation of gamefield with random startvalue
         """
-        gamefield = game.random_startvalues()
+        gamefield = cg.random_startvalues()
         self.assert_structue_of_gamefield(gamefield)
 
     def test_b2_random_startvalues_fail(self):
         """
         Test creation of gamefield with random start values
-        not having same nr_rows and cols
+        not having same number of rows and cols
         """
-        game.NR_ROWS = 10
+        config.NR_ROWS = 10
         with self.assertRaises(AssertionError):
-            gamefield = game.random_startvalues()
+            gamefield = cg.random_startvalues()
 
     def test_c1_get_pattern(self):
         """
         Test reading pattern from file
         """
-        pattern = game.get_pattern("beacon")
+        pattern = cg.get_pattern("beacon")
         self.assertEqual(pattern, [
             [0,0,0,0,0,0],
             [0,1,1,0,0,0],
@@ -71,7 +72,7 @@ class TestCreateGamefield(unittest.TestCase):
         Test reading pattern from file when file not exist
         """
         with self.assertRaises(FileNotFoundError):
-            pattern = game.get_pattern("no_such_file")
+            pattern = cg.get_pattern("no_such_file")
 
     def test_d1_inject_pattern_biggersize(self):
         """
@@ -86,8 +87,8 @@ class TestCreateGamefield(unittest.TestCase):
             [0,0,0,1,1,0],
             [0,0,0,0,0,0],
         ]
-        game.NR_ROWS = 10
-        game.NR_COLS = 10
+        config.NR_ROWS = 10
+        config.NR_COLS = 10
         gamefield_pre = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -100,7 +101,7 @@ class TestCreateGamefield(unittest.TestCase):
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]
-        gamefield_pattern = game.inject_pattern(gamefield_pre, beacon)
+        gamefield_pattern = cg.inject_pattern(gamefield_pre, beacon)
         self.assertEqual(gamefield_pattern, [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -127,8 +128,8 @@ class TestCreateGamefield(unittest.TestCase):
             [0,0,0,1,1,0],
             [0,0,0,0,0,0],
         ]
-        game.NR_ROWS = len(beacon)
-        game.NR_COLS = len(beacon[0])
+        config.NR_ROWS = len(beacon)
+        config.NR_COLS = len(beacon[0])
         gamefield_pre = [
             [0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0],
@@ -137,7 +138,7 @@ class TestCreateGamefield(unittest.TestCase):
             [0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0],
         ]
-        gamefield_pattern = game.inject_pattern(gamefield_pre, beacon)
+        gamefield_pattern = cg.inject_pattern(gamefield_pre, beacon)
         self.assertEqual(gamefield_pattern, [
             [0, 0, 0, 0, 0, 0],
             [0, 1, 1, 0, 0, 0],
@@ -159,8 +160,8 @@ class TestCreateGamefield(unittest.TestCase):
             [0,0,0,1,1,0],
             [0,0,0,0,0,0],
         ]
-        game.NR_ROWS = 5
-        game.NR_COLS = 5
+        config.NR_ROWS = 5
+        config.NR_COLS = 5
         gamefield_pre = [
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
@@ -168,7 +169,7 @@ class TestCreateGamefield(unittest.TestCase):
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
         ]
-        gamefield_pattern = game.inject_pattern(gamefield_pre, beacon)
+        gamefield_pattern = cg.inject_pattern(gamefield_pre, beacon)
         self.assertEqual(gamefield_pattern, [
             [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
             [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
@@ -182,9 +183,9 @@ class TestCreateGamefield(unittest.TestCase):
         Test creating gamefield from file with pattern.
         When gamefield is bigger than pattern
         """
-        game.NR_ROWS = 10
-        game.NR_COLS = 10
-        gamefield = game.startvalues_fromfile("beacon")
+        config.NR_ROWS = 10
+        config.NR_COLS = 10
+        gamefield = cg.startvalues_fromfile("beacon")
         self.assertEqual(gamefield, [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -203,9 +204,9 @@ class TestCreateGamefield(unittest.TestCase):
         Test creating gamefield from file with pattern.
         When gamefield is same size as pattern.
         """
-        game.NR_ROWS = 6 # len of beacon
-        game.NR_COLS = 6 # len of beacon[0]
-        gamefield = game.startvalues_fromfile("beacon")
+        config.NR_ROWS = 6 # len of beacon
+        config.NR_COLS = 6 # len of beacon[0]
+        gamefield = cg.startvalues_fromfile("beacon")
         self.assertEqual(gamefield, [
             [0, 0, 0, 0, 0, 0],
             [0, 1, 1, 0, 0, 0],
@@ -220,9 +221,9 @@ class TestCreateGamefield(unittest.TestCase):
         Test creating gamefield from file with pattern.
         When gamefield is smaller
         """
-        game.NR_ROWS = 5 # len of beacon is 6
-        game.NR_COLS = 5 # len of beacon[0] is 6
-        gamefield = game.startvalues_fromfile("beacon")
+        config.NR_ROWS = 5 # len of beacon is 6
+        config.NR_COLS = 5 # len of beacon[0] is 6
+        gamefield = cg.startvalues_fromfile("beacon")
         self.assertEqual(gamefield, [
             [0, 0, 0, 0, 0, 0],
             [0, 1, 1, 0, 0, 0],
@@ -238,10 +239,10 @@ class TestCreateGamefield(unittest.TestCase):
         When gamefield is smaller and pattern size diff between
         rows and cols
         """
-        game.NR_ROWS = 5 # len of beacon is 6
-        game.NR_COLS = 5 # len of beacon[0] is 6
+        config.NR_ROWS = 5 # len of beacon is 6
+        config.NR_COLS = 5 # len of beacon[0] is 6
         with self.assertRaises(ValueError):
-            gamefield = game.startvalues_fromfile("beehive")
+            gamefield = cg.startvalues_fromfile("beehive")
 
     def test_f5_startvalues_fromfile_no_file(self):
         """
@@ -249,23 +250,25 @@ class TestCreateGamefield(unittest.TestCase):
         When no such file exist
         """
         with self.assertRaises(FileNotFoundError):
-            gamefield = game.startvalues_fromfile("no_such_file")
+            gamefield = cg.startvalues_fromfile("no_such_file")
 
     def test_f1_create_gamefield_random(self):
         """
-        Test the create_gamefield() function without filename
+        Test the create_gamefield() function without argv
         """
-        gamefield = game.create_gamefield()
+        gamefield = cg.create_gamefield()
         self.assert_structue_of_gamefield(gamefield)
 
     def test_f2_create_gamefield_file(self):
         """
-        Test the create_gamefield() function with filename
+        Test the create_gamefield() function with argv
         """
-        game.NR_COLS = 10
-        game.NR_ROWS = 10
+        config.NR_COLS = 10
+        config.NR_ROWS = 10
+        arg = "beehive"
+        argv.append(arg)
 
-        gamefield = game.create_gamefield("beehive")
+        gamefield = cg.create_gamefield()
         self.assertEqual(gamefield, [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -278,6 +281,8 @@ class TestCreateGamefield(unittest.TestCase):
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ])
+        argv.remove(arg)
+
 
     def test_g1_check_argv_with(self):
         """
@@ -286,7 +291,7 @@ class TestCreateGamefield(unittest.TestCase):
         arg = "beehive"
         argv.append(arg)
 
-        filename = game.check_if_cmdinp()
+        filename = cg.check_if_cmdinp()
         self.assertEqual(filename, arg)
         argv.remove(arg)
 
@@ -294,8 +299,8 @@ class TestCreateGamefield(unittest.TestCase):
         """
         Test the check_If_cmdinp() function without argv
         """
-        no_argv = 0
-        filename = game.check_if_cmdinp()
+        no_argv = ""
+        filename = cg.check_if_cmdinp()
         self.assertEqual(filename, no_argv)
 
 if __name__ == '__main__':
