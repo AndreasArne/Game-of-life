@@ -15,6 +15,7 @@ NR_COLS = 20
 ALIVE_V = 1
 DEAD_V  = 0
 SLEEP_TIME = 0.5
+PATTERN_PATH = "patterns"
 
 def create_gamefield(filename=""):
     """
@@ -163,7 +164,7 @@ def prettyprint(gamefield):
     print(chr(27) + "[2J" + chr(27) + "[;H")
     print('\n'.join([' '.join([str(col) for col in row]) for row in gamefield]))
 
-def insert_pattern(gamefield, pattern):
+def inject_pattern(gamefield, pattern):
     """
     Inject pattern into center of the gamefield
     """
@@ -183,7 +184,7 @@ def get_pattern(filename):
     """
     Create 2d gamefield from file
     """
-    file_path = "patterns/{}.json".format(filename)
+    file_path = "{}/{}.json".format(PATTERN_PATH, filename)
     with open(file_path, "r") as fh:
         pattern = json.load(fh)
     return pattern
@@ -199,10 +200,10 @@ def startvalues_fromfile(filename):
         NR_ROWS = len(pattern)
         NR_COLS = len(pattern[0])
         return pattern
-    elif (len(pattern) != len(pattern[0])) and (len(pattern) > NR_ROWS or len(pattern[0]) > NR_COLS):
+    elif len(pattern) != len(pattern[0]) and (len(pattern) > NR_ROWS or len(pattern[0]) > NR_COLS):
         raise ValueError("Pattern does not have same size and is bigger than gamefield")
     else:
-        return insert_pattern(create_2dlist(), pattern)
+        return inject_pattern(create_2dlist(), pattern)
 
 def check_if_cmdinp():
     """
