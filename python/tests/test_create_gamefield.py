@@ -299,9 +299,11 @@ class TestCreateGamefield(unittest.TestCase):
         """
         Test the check_If_cmdinp() function without argv
         """
-        no_argv = ""
+        old_argv = argv
+        no_argv = argv[:1]
         filename = cg.check_if_cmdinp()
         self.assertEqual(filename, no_argv)
+        argv = old
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

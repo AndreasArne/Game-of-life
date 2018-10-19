@@ -72,7 +72,7 @@ def check_if_cmdinp():
     Check if there is a commandline argument for reading patterns from file
     """
     if len(argv) > 1:
-        return argv[1]
+        return argv[-1]
     else:
         return ""
 
