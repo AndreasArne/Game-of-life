@@ -52,7 +52,10 @@ def check_rules(alive, n_value):
     """
     Check rules for cell
     """
-    if alive and n_value < 2: # 1
+    if not 0 <= n_value <= 8:
+        raise ValueError("Impossible neighborhood value: ", n_value)
+
+    elif alive and 0 <= n_value <= 1: # 1
         # Any live cell with fewer than two live neighbors dies, as if by under population.
         return 1
     elif alive and 1 < n_value < 4: # 2-3
