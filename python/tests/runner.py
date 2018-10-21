@@ -3,6 +3,7 @@
 Run test suites for game of life
 """
 import unittest
+from sys import exit
 # import your test modules
 import test_create_gamefield
 import test_game
@@ -18,3 +19,4 @@ suite.addTests(loader.loadTestsFromModule(test_game))
 # initialize a runner, pass it your suite and run it
 runner = unittest.TextTestRunner(verbosity=3)
 result = runner.run(suite)
+exit(not result.wasSuccessful())
