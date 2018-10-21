@@ -8,6 +8,7 @@
 # General setup
 #
 
+# Set default target
 .DEFAULT_GOAL := test
 
 # Decide if use python3 or python

@@ -19,4 +19,6 @@ suite.addTests(loader.loadTestsFromModule(test_game))
 # initialize a runner, pass it your suite and run it
 runner = unittest.TextTestRunner(verbosity=3)
 result = runner.run(suite)
+
+# exit with status
 exit(not result.wasSuccessful())
