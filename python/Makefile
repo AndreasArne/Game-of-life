@@ -12,11 +12,10 @@
 .DEFAULT_GOAL := test
 
 # Decide if use python3 or python
-ifeq (python3 --version > /dev/null, 1)
-	py = python3
-else
-	py = python
-endif
+ py = python3
+ ifeq (, $(shell which python3))
+ 	py = python
+ endif
 
 # Detect OS
 OS = $(shell uname -s)
