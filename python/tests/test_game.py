@@ -181,19 +181,102 @@ class TestGame(unittest.TestCase):
         # center
         nh = game.get_neighborhood(gamefield, 1, 1)
         self.assertEqual(nh, 4)
+
+    def test_e1_get_tick_changes(self):
+        """
+        Test get_tick_changes() on a 5x5 gamefield
+        """
+        config.NR_ROWS = 5
+        config.NR_COLS = 5
+        blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
+        tick_changes = game.get_tick_changes(blinker)
+
+        self.assertEqual(tick_changes, [
+                (1, 2, 4),
+                (2, 1, 1),
+                (2, 3, 1),
+                (3, 2, 4),
+            ])
     
-    def test_e1_activate_rules(self):
+    def test_f1_activate_rules(self):
         """
         Test activate_rules() on a 5x5 gamefield
         """
-        pass
+        config.NR_ROWS = 5
+        config.NR_COLS = 5
+        blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
+        tick_changes = [(1, 2, 4), (2, 1, 1), (2, 3, 1), (3, 2, 4)]
+        new_gamefield = game.activate_rules(blinker, tick_changes)
+
+        self.assertEqual(new_gamefield, [
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+            ])
+
+    def test_f2_activate_rules_inc_rule3(self):
+        """
+        Test activate_rules() on a 6x6 gamefield which activates if rule 3
+        """
+        config.NR_ROWS = 6
+        config.NR_COLS = 6
+        beacon = [
+            [0,0,0,0,0,0],
+            [0,1,1,0,0,0],
+            [0,1,0,0,0,0],
+            [0,0,0,0,1,0],
+            [0,0,0,1,1,0],
+            [0,0,0,0,0,0]
+        ]
+
+        tick_changes = [(2, 2, 4), (3, 3, 4)]
+        new_gamefield = game.activate_rules(beacon, tick_changes)
+        self.assertEqual(new_gamefield, [
+                [0, 0, 0, 0, 0, 0],
+                [0, 1, 1, 0, 0, 0],
+                [0, 1, 1, 0, 0, 0],
+                [0, 0, 0, 1, 1, 0],
+                [0, 0, 0, 1, 1, 0],
+                [0, 0, 0, 0, 0, 0]
+        ])
+
+        tick_changes = [(2, 2, 3), (3, 3, 3)]
+        new_gamefield = game.activate_rules(new_gamefield, tick_changes)
+        self.assertEqual(new_gamefield, beacon)
+
+    def test_f3_activate_rules_fail(self):
+        """
+        Test activate_rules() on a 5x5 gamefield and 
+        raises error for unexisting rule
+        """
+        config.NR_ROWS = 5
+        config.NR_COLS = 5
+        blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
+        tick_changes = [(1, 2, 5), (2, 1, 1), (2, 3, 1), (3, 2, 4)] # 5 is not an existing rule
+        
+        with self.assertRaises(ValueError):
+            new_gamefield = game.activate_rules(blinker, tick_changes)
+
+    def test_g1_perform_tick(self):
+        """
+        Test perform_tick() on a 5x5 gamefield
+        """
+        config.NR_ROWS = 5
+        config.NR_COLS = 5
+        blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
+        new_gamefield = game.perform_tick(blinker)
+
+        self.assertEqual(new_gamefield, [
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+            ])
 
 
-    # def tick
-
-
-    # start
-    # game_loop
     # prettyprint
 
 if __name__ == '__main__':

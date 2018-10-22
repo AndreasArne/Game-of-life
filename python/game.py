@@ -11,7 +11,7 @@ import config
 
 
 
-def start():
+def start():    # pragma: no cover
     """
     Entry point for game.
     """
@@ -23,20 +23,19 @@ def start():
 
     game_loop(gamefield)
 
-def game_loop(gamefield):
+def game_loop(gamefield):   # pragma: no cover
     """
     Forever loop for game
     """
     while(True):
         # prettyprint(gamefield)
         sleep(config.SLEEP_TIME)
-        tick(gamefield)
+        perform_tick(gamefield)
         gui.update_board(gamefield)
 
-def tick(gamefield):
+def get_tick_changes(gamefield):
     """
-    Perfom a tick.
-    A tick is one round where each cell has a rule check
+    Calculate changes on gamefield for tick
     """
     tick_changes = []
     for row in range(config.NR_ROWS):
@@ -45,8 +44,16 @@ def tick(gamefield):
             rule = check_rules(gamefield[row][col], neighbor_value)
             if rule > 0:
                 tick_changes.append((row, col, rule))
+    return tick_changes
 
+def perform_tick(gamefield):
+    """
+    Perfom a tick.
+    A tick is one round where each cell has a rule check
+    """
+    tick_changes = get_tick_changes(gamefield)
     activate_rules(gamefield, tick_changes)
+    return gamefield
 
 def check_rules(alive, n_value):
     """
@@ -93,7 +100,9 @@ def activate_rules(gamefield, tick):
         else:
             # print("This shouldn't be!")
             # print(alive, n_value)
+            raise ValueError("This shouldn't happen!" + str(change))
             pass
+    return gamefield
 
 def get_neighborhood(gamefield, r_index, c_index):
     """
