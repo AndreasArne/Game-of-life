@@ -13,8 +13,10 @@ exclude_lines =
     # Don't report non-runnable code
     if 0:
     if __name__ == .__main__.:
-
-
+    pass
+    def prettyprint
+    pragma: no cover
+# use "pragma: no cover" as comment to ignore code
 
 [html]
 directory = coverage_html
