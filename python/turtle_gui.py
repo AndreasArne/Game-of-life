@@ -94,16 +94,6 @@ def update_board(gamefield):
 
 
 
-def start():
-    """
-    Deprecated. Functions only needed if using interactive window.
-    """
-    pass
-    # SCREEN.exitonclick()
-    # SCREEN.mainloop()
-
-
-
 def draw_square(t, x, y, length):
     """
     deprecated
@@ -132,16 +122,5 @@ def create_squares(turtles):
 
 
 
-def main():
-    """
-    This wont work. Start using game.py
-    """
-    config()
-    turtles = create_turtles(5)
-
-    create_squares(turtles)
-    update_board([])
-    start()
-
 if __name__ == "__main__":
-    main()
+    pass
