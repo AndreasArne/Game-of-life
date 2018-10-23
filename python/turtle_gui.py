@@ -94,33 +94,5 @@ def update_board(gamefield):
 
 
 
-def draw_square(t, x, y, length):
-    """
-    deprecated
-    """
-    t.up()
-    t.goto(x,y)
-    t.down()
-    t.begin_fill()
-    for steps in range(4):
-        t.fd(length)
-        t.left(90)
-
-    t.end_fill()
-
-
-
-def create_squares(turtles):
-    """
-    deprecated
-    """
-    size = T_CONF["size"]
-
-    for x, row in enumerate(turtles):
-        for y, t in enumerate(row):
-            draw_square(t, x*size, y*size, size)
-
-
-
 if __name__ == "__main__":
     pass
