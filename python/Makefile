@@ -13,7 +13,7 @@
 
 # Decide if use python3 or python
  py = python3
- ifeq (, $(shell which python3))
+ ifeq (, $(@shell which python3))
  	py = python
  endif
 
