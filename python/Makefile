@@ -90,3 +90,10 @@ clean:
 	rm -rf tests/__pycache__
 	rm tests/.coverage
 	rm -rf tests/coverage_html
+
+
+
+# target: install                 - Install all Python packages specified in requirement.txt
+.PHONY: install
+install:
+	pip install -r requirements.txt
