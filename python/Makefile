@@ -12,10 +12,15 @@
 .DEFAULT_GOAL := test
 
 # Decide if use python3 or python
- py = python3
- ifeq (, $(@shell which python3))
- 	py = python
- endif
+py = python3
+ifeq (, $(@shell which python3))
+	py = python
+endif
+# Decide if use pip3 or pip
+pip = pip3
+ifeq (, $(@shell which pip3))
+	pip = pip
+endif
 
 # Detect OS
 OS = $(shell uname -s)
@@ -96,4 +101,4 @@ clean:
 # target: install                 - Install all Python packages specified in requirement.txt
 .PHONY: install
 install:
-	pip install -r requirements.txt
+	${pip} install -r requirements.txt
