@@ -91,7 +91,7 @@ test-html: exec-tests
 # target: clean                   - Remove all generated files
 .PHONY: clean
 clean:
-	rm -rf __pycache__
+	rm -rf game/__pycache__
 	rm -rf tests/__pycache__
 	rm tests/.coverage
 	rm -rf tests/coverage_html

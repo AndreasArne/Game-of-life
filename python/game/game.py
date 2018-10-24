@@ -5,9 +5,9 @@ Implementation of Conway's game of life
 """
 from time import sleep
 
-import create_gamefield as cg
-import turtle_gui as gui
-import config
+from . import create_gamefield as cg
+from . import turtle_gui as gui
+from . import config
 
 
 

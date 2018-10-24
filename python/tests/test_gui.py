@@ -6,9 +6,9 @@ Tests the functions used to for the gui in turtle_gui.py.
 from sys import argv, path
 import os
 import unittest
-path.insert(1, os.path.join(path[0], '..'))
-import turtle_gui
-import config
+
+from context import turtle_gui
+from context import config
 
 class TestGui(unittest.TestCase):
     """

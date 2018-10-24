@@ -6,9 +6,9 @@ Tests the functions used to calculate Conway's game of life in game.py
 from sys import argv, path
 import os
 import unittest
-path.insert(1, os.path.join(path[0], '..'))
-import game
-import config
+
+from context import game
+from context import config
 
 class TestGame(unittest.TestCase):
     """
@@ -45,7 +45,7 @@ class TestGame(unittest.TestCase):
         config.NR_COLS = 10
 
         index = game.calc_bounds(low_value, type_of)
-        self.assertEqual(index, low_value)        
+        self.assertEqual(index, low_value)
         index = game.calc_bounds(out_above, type_of)
         self.assertEqual(index, 5)
         index = game.calc_bounds(out_below, type_of)
@@ -197,7 +197,7 @@ class TestGame(unittest.TestCase):
                 (2, 3, 1),
                 (3, 2, 4),
             ])
-    
+
     def test_f1_activate_rules(self):
         """
         Test activate_rules() on a 5x5 gamefield
@@ -248,14 +248,14 @@ class TestGame(unittest.TestCase):
 
     def test_f3_activate_rules_fail(self):
         """
-        Test activate_rules() on a 5x5 gamefield and 
+        Test activate_rules() on a 5x5 gamefield and
         raises error for unexisting rule
         """
         config.NR_ROWS = 5
         config.NR_COLS = 5
         blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
         tick_changes = [(1, 2, 5), (2, 1, 1), (2, 3, 1), (3, 2, 4)] # 5 is not an existing rule
-        
+
         with self.assertRaises(ValueError):
             new_gamefield = game.activate_rules(blinker, tick_changes)
 
