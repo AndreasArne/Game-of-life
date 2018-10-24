@@ -10,6 +10,7 @@ TO-DO:
     - Use decorator for tick function? https://realpython.com/primer-on-python-decorators/
     - Create tests before re-writing as objects!
     - Implement an object oriented version.
+    - Testa https://docs.python-guide.org/writing/tests/#hypothesis för dynamiska input till testerna
 * Try other implementations of the algorithm.
 * <s>Read starting gamefield from file so can test [patterns](https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Examples_of_patterns)</s>
 * <s>Pixel graphics for gamefield so not only showing 0 and 1. Using Turtle</s>
