@@ -8,7 +8,7 @@ from random import randint
 
 
 
-SCREEN = Screen()
+SCREEN = None
 TURTLES = []
 T_CONF = {
         "show_color": "white",
@@ -20,12 +20,22 @@ T_CONF = {
 
 
 
+def init_screen(): # pragma: no cover
+    """
+    Initialize SCREEN with a screen()
+    """
+    global SCREEN
+    SCREEN = Screen()
+
+
+
 def config( nr_rows, nr_cols, bgcolor="black"):
     """
     Configure window
     """
     height = T_CONF["size"] * nr_rows + (T_CONF["border_size"] * nr_rows)
     width = T_CONF["size"] * nr_cols + (T_CONF["border_size"] * nr_cols)
+
 
     SCREEN.clear()
     SCREEN.setup(width, height)

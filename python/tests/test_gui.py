@@ -17,6 +17,13 @@ class TestGui(unittest.TestCase):
     Test the different functions used for in turtle_gui.py
     """
 
+    @classmethod
+    def setUpClass(cls):
+        """
+        Initalize scrren before running tests
+        """
+        gui.init_screen()
+
     def setUp(self):
         config.NR_COLS = 10
         config.NR_ROWS = 10
