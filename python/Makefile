@@ -12,13 +12,15 @@
 .DEFAULT_GOAL := test
 
 # Decide if use python3 or python
-py = python3
 ifeq (, $(@shell which python3))
+	py = python3
+else
 	py = python
 endif
 # Decide if use pip3 or pip
-pip = pip3
 ifeq (, $(@shell which pip3))
+	pip = pip3
+else
 	pip = pip
 endif
 
@@ -66,7 +68,7 @@ help:
 
 # target: exec-tests              - Run tests in tests/runner.py with coverage.py
 .PHONY: exec-tests
-exec-tests:
+exec-tests: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/" "$(NO_COLOR)"
 	@cd tests && ${py} -m coverage run --rcfile=../.coveragerc runner.py \
 		&& $(ECHO) "$(OK_COLOR)All tests passed " "$(NO_COLOR)" \
@@ -77,6 +79,8 @@ exec-tests:
 # target: test                    - Run tests and display code coverage
 .PHONY: test
 test: exec-tests
+	echo "${py}"
+	
 	@cd tests && ${py} -m coverage report --rcfile=../.coveragerc
 
 
