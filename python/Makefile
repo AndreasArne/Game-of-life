@@ -77,7 +77,7 @@ run:
 .PHONY: exec-tests
 exec-tests: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/" "$(NO_COLOR)"
-	@cd tests && ${py} -m coverage run --rcfile=../.coveragerc runner.py \
+	@${py} -m coverage run tests/runner.py \
 		&& $(ECHO) "$(OK_COLOR)All tests passed " "$(NO_COLOR)" \
 		|| $(ECHO) "$(ERROR_COLOR)Tests faild" "$(NO_COLOR)"
 
@@ -88,14 +88,14 @@ exec-tests: clean
 test: exec-tests
 	echo "${py}"
 	
-	@cd tests && ${py} -m coverage report --rcfile=../.coveragerc
+	${py} -m coverage report
 
 
 
 # target: test-html               - Run tests and display detailed code coverage with html
 .PHONY: test-html
 test-html: exec-tests
-	@cd tests && ${py} -m coverage html --rcfile=../.coveragerc && firefox coverage_html/index.html &
+	${py} -m coverage html && firefox tests/coverage_html/index.html &
 
 
 
@@ -104,7 +104,7 @@ test-html: exec-tests
 clean:
 	rm -rf game/__pycache__
 	rm -rf tests/__pycache__
-	rm -f tests/.coverage
+	rm -f .coverage
 	rm -rf tests/coverage_html
 
 

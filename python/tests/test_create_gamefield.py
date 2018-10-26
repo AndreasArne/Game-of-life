@@ -18,7 +18,6 @@ class TestCreateGamefield(unittest.TestCase):
     def setUp(self):
         config.NR_COLS = 20
         config.NR_ROWS = 20
-        config.PATTERN_PATH = "../patterns"
 
     def assert_structue_of_gamefield(self, gamefield):
         """
