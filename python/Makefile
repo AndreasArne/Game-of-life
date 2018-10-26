@@ -73,6 +73,15 @@ run:
 
 
 
+# target: validate                - Validate code with pylint
+.PHONY: validate
+validate:
+	@pylint game tests \
+		&& $(ECHO) "$(OK_COLOR)Code is valid " "$(NO_COLOR)" \
+		|| $(ECHO) "$(ERROR_COLOR)Clean up your code!" "$(NO_COLOR)"
+
+
+
 # target: exec-tests              - Run tests in tests/runner.py with coverage.py
 .PHONY: exec-tests
 exec-tests: clean
