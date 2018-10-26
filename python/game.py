@@ -18,6 +18,8 @@ def start():    # pragma: no cover
     gamefield = cg.create_gamefield()
 
     gui.config(config.NR_ROWS, config.NR_COLS)
+    gui.create_turtles(config.NR_ROWS, config.NR_COLS)
+    
     gui.update_board(gamefield)
 
     game_loop(gamefield)

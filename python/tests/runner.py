@@ -15,8 +15,8 @@ suite = unittest.TestSuite()
 
 # add tests to the test suite
 suite.addTests(loader.loadTestsFromModule(test_create_gamefield))
-suite.addTests(loader.loadTestsFromModule(test_game))
 suite.addTests(loader.loadTestsFromModule(test_gui))
+suite.addTests(loader.loadTestsFromModule(test_game))
 
 # initialize a runner, pass it your suite and run it
 runner = unittest.TextTestRunner(verbosity=3)
