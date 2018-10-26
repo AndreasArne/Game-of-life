@@ -7,8 +7,8 @@ from sys import argv, path
 import os
 import unittest
 path.insert(1, os.path.join(path[0], '..'))
-import create_gamefield as cg
-import config
+from game import create_gamefield as cg
+from game import config
 
 class TestCreateGamefield(unittest.TestCase):
     """

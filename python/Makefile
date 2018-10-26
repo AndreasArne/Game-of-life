@@ -66,6 +66,13 @@ help:
 
 
 
+# target: run <pattern=pattern>   - Start game, game/logic.py. Optional argument with pattern
+.PHONY: run
+run:
+	@${py} -m game.logic ${pattern}
+
+
+
 # target: exec-tests              - Run tests in tests/runner.py with coverage.py
 .PHONY: exec-tests
 exec-tests: clean
@@ -95,7 +102,7 @@ test-html: exec-tests
 # target: clean                   - Remove all generated files
 .PHONY: clean
 clean:
-	rm -rf __pycache__
+	rm -rf game/__pycache__
 	rm -rf tests/__pycache__
 	rm -f tests/.coverage
 	rm -rf tests/coverage_html

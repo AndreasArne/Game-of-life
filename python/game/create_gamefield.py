@@ -5,9 +5,9 @@ Functions for creating the gamefield used in Game of life
 
 from sys import argv
 from random import randint
-
 import json
-import config
+
+from game import config
 
 def inject_pattern(gamefield, pattern):
     """

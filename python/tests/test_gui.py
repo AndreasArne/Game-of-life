@@ -9,8 +9,8 @@ import unittest
 from turtle import Turtle
 
 path.insert(1, os.path.join(path[0], '..'))
-import turtle_gui as gui
-import config
+from game import turtle_gui as gui
+from game import config
 
 class TestGui(unittest.TestCase):
     """
