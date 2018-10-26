@@ -97,7 +97,7 @@ test-html: exec-tests
 clean:
 	rm -rf __pycache__
 	rm -rf tests/__pycache__
-	rm tests/.coverage
+	rm -f tests/.coverage
 	rm -rf tests/coverage_html
 
 
