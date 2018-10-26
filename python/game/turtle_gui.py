@@ -4,19 +4,18 @@
 Code for the GUI used by game.py
 """
 from turtle import Turtle, Screen
-from random import randint
 
 
 
 SCREEN = None
 TURTLES = []
 T_CONF = {
-        "show_color": "white",
-        "hide_color": "grey",
-        "shape": "square",
-        "size": 20,
-        "border_size": 5
-    }
+    "show_color": "white",
+    "hide_color": "grey",
+    "shape": "square",
+    "size": 20,
+    "border_size": 5
+}
 
 
 
@@ -29,7 +28,7 @@ def init_screen(): # pragma: no cover
 
 
 
-def config( nr_rows, nr_cols, bgcolor="black"):
+def config(nr_rows, nr_cols, bgcolor="black"):
     """
     Configure window
     """
@@ -66,7 +65,7 @@ def place_turtle(t, x, y):
     if x >= SCREEN.window_width() or y >= SCREEN.window_height():
         raise IndexError("Placing Turtl outside of screen: x={}, y={}".format(x, y))
     t.up()
-    t.goto(x,y)
+    t.goto(x, y)
     t.down()
 
 
@@ -88,7 +87,9 @@ def create_turtles(rows, cols):
     """
     Create a turtle for each "pixel" in grid gui
     """
-    if rows < 0 or cols < 0: raise IndexError("Siez less than 0")
+    if rows < 0 or cols < 0:
+        raise IndexError("Siez less than 0")
+
     global TURTLES
     for x in range(rows):
         row = []

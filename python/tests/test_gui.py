@@ -3,12 +3,12 @@
 """
 Tests the functions used to for the gui in turtle_gui.py.
 """
-from sys import argv, path
+from turtle import Turtle
+from sys import path
 import os
 import unittest
-from turtle import Turtle
-
 path.insert(1, os.path.join(path[0], '..'))
+
 from game import turtle_gui as gui
 from game import config
 
@@ -83,7 +83,7 @@ class TestGui(unittest.TestCase):
         """
         t = gui.create_turtle(0, 0)
         ts = gui.SCREEN.turtles()
-        self.assertEqual(t.pos(), (0,0))
+        self.assertEqual(t.pos(), (0, 0))
         self.assertIs(t, ts[0])
 
         t2 = gui.create_turtle(1, 1)
@@ -136,9 +136,9 @@ class TestGui(unittest.TestCase):
         gui.create_turtles(3, 3)
         gui.update_turtle(0, 0, 0)
         gamefield = [
-            [0,0,1],
-            [1,0,0],
-            [0,1,0],
+            [0, 0, 1],
+            [1, 0, 0],
+            [0, 1, 0],
         ]
         gui.update_board(gamefield)
         self.assertEqual(gui.TURTLES[0][2].color(), (gui.T_CONF["show_color"], gui.T_CONF["show_color"]))

@@ -3,7 +3,7 @@
 """
 Tests the functions used to calculate Conway's game of life in logic.py
 """
-from sys import argv, path
+from sys import path
 import os
 import unittest
 path.insert(1, os.path.join(path[0], '..'))
@@ -188,15 +188,15 @@ class TestGame(unittest.TestCase):
         """
         config.NR_ROWS = 5
         config.NR_COLS = 5
-        blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
+        blinker = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
         tick_changes = logic.get_tick_changes(blinker)
 
         self.assertEqual(tick_changes, [
-                (1, 2, 4),
-                (2, 1, 1),
-                (2, 3, 1),
-                (3, 2, 4),
-            ])
+            (1, 2, 4),
+            (2, 1, 1),
+            (2, 3, 1),
+            (3, 2, 4),
+        ])
     
     def test_f1_activate_rules(self):
         """
@@ -204,17 +204,17 @@ class TestGame(unittest.TestCase):
         """
         config.NR_ROWS = 5
         config.NR_COLS = 5
-        blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
+        blinker = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
         tick_changes = [(1, 2, 4), (2, 1, 1), (2, 3, 1), (3, 2, 4)]
         new_gamefield = logic.activate_rules(blinker, tick_changes)
 
         self.assertEqual(new_gamefield, [
-                [0, 0, 0, 0, 0],
-                [0, 0, 1, 0, 0],
-                [0, 0, 1, 0, 0],
-                [0, 0, 1, 0, 0],
-                [0, 0, 0, 0, 0],
-            ])
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0],
+        ])
 
     def test_f2_activate_rules_inc_rule3(self):
         """
@@ -223,23 +223,23 @@ class TestGame(unittest.TestCase):
         config.NR_ROWS = 6
         config.NR_COLS = 6
         beacon = [
-            [0,0,0,0,0,0],
-            [0,1,1,0,0,0],
-            [0,1,0,0,0,0],
-            [0,0,0,0,1,0],
-            [0,0,0,1,1,0],
-            [0,0,0,0,0,0]
+            [0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0],
         ]
 
         tick_changes = [(2, 2, 4), (3, 3, 4)]
         new_gamefield = logic.activate_rules(beacon, tick_changes)
         self.assertEqual(new_gamefield, [
-                [0, 0, 0, 0, 0, 0],
-                [0, 1, 1, 0, 0, 0],
-                [0, 1, 1, 0, 0, 0],
-                [0, 0, 0, 1, 1, 0],
-                [0, 0, 0, 1, 1, 0],
-                [0, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 0, 0, 0],
+            [0, 1, 1, 0, 0, 0],
+            [0, 0, 0, 1, 1, 0],
+            [0, 0, 0, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0],
         ])
 
         tick_changes = [(2, 2, 3), (3, 3, 3)]
@@ -253,11 +253,11 @@ class TestGame(unittest.TestCase):
         """
         config.NR_ROWS = 5
         config.NR_COLS = 5
-        blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
+        blinker = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
         tick_changes = [(1, 2, 5), (2, 1, 1), (2, 3, 1), (3, 2, 4)] # 5 is not an existing rule
         
         with self.assertRaises(ValueError):
-            new_gamefield = logic.activate_rules(blinker, tick_changes)
+            logic.activate_rules(blinker, tick_changes)
 
     def test_g1_perform_tick(self):
         """
@@ -265,16 +265,16 @@ class TestGame(unittest.TestCase):
         """
         config.NR_ROWS = 5
         config.NR_COLS = 5
-        blinker = [[0,0,0,0,0], [0,0,0,0,0], [0,1,1,1,0], [0,0,0,0,0], [0,0,0,0,0]]
+        blinker = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
         new_gamefield = logic.perform_tick(blinker)
 
         self.assertEqual(new_gamefield, [
-                [0, 0, 0, 0, 0],
-                [0, 0, 1, 0, 0],
-                [0, 0, 1, 0, 0],
-                [0, 0, 1, 0, 0],
-                [0, 0, 0, 0, 0],
-            ])
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0],
+        ])
 
 
     # prettyprint
