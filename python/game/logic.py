@@ -5,9 +5,9 @@ Implementation of Conway's game of life
 """
 from time import sleep
 
-from . import create_gamefield as cg
-from . import turtle_gui as gui
-from . import config
+from game import create_gamefield as cg
+from game import turtle_gui as gui
+from game import config
 
 
 
@@ -17,7 +17,10 @@ def start():    # pragma: no cover
     """
     gamefield = cg.create_gamefield()
 
+    gui.init_screen()
     gui.config(config.NR_ROWS, config.NR_COLS)
+    gui.create_turtles(config.NR_ROWS, config.NR_COLS)
+    
     gui.update_board(gamefield)
 
     game_loop(gamefield)
@@ -80,9 +83,9 @@ def activate_rules(gamefield, tick):
     """
     Activate rules for each changed cell
     """
-    row_i    = 0
-    col_i    = 1
-    rule_i   = 2
+    row_i = 0
+    col_i = 1
+    rule_i = 2
     for change in tick:
         rule = change[rule_i]
         row = change[row_i]
@@ -100,24 +103,42 @@ def activate_rules(gamefield, tick):
             # print("This shouldn't be!")
             # print(alive, n_value)
             raise ValueError("This shouldn't happen!" + str(change))
-            pass
+
     return gamefield
 
 def get_neighborhood(gamefield, r_index, c_index):
     """
     calculate neighborhood value for col to check rules
     """
+    row_above = r_index - 1
+    row_below = r_index + 1
+    col_left = c_index - 1
+    col_right = c_index + 1
+
     if check_bounds_column(c_index): # needed because of slicing
-        above = sum(gamefield[calc_bounds(r_index-1, "r")][c_index-1:c_index+1], gamefield[calc_bounds(r_index-1, "r")][0])
-        below = sum(gamefield[calc_bounds(r_index+1, "r")][c_index-1:c_index+1], gamefield[calc_bounds(r_index+1, "r")][0])
+        above_lm = gamefield[calc_bounds(row_above, "r")][col_left:col_right]
+        above_sum = sum(
+            above_lm,
+            gamefield[calc_bounds(row_above, "r")][0]
+        )
+
+        below_lm = gamefield[calc_bounds(row_below, "r")][col_left:col_right]
+        below = sum(
+            below_lm,
+            gamefield[calc_bounds(row_below, "r")][0]
+        )
     else:
-        above = sum([gamefield[calc_bounds(r_index-1, "r")][i] for i in range(c_index-1, c_index+2)])
-        below = sum([gamefield[calc_bounds(r_index+1, "r")][i] for i in range(c_index-1, c_index+2)])
+        above_sum = sum(
+            [gamefield[calc_bounds(row_above, "r")][i] for i in range(col_left, col_right+1)]
+        )
+        below = sum(
+            [gamefield[calc_bounds(row_below, "r")][i] for i in range(col_left, col_right+1)]
+        )
+    
+    left = gamefield[r_index][calc_bounds(col_left, "c")]
+    right = gamefield[r_index][calc_bounds(col_right, "c")]
 
-    left  = gamefield[r_index][calc_bounds(c_index-1, "c")]
-    right = gamefield[r_index][calc_bounds(c_index+1, "c")]
-
-    neighbor_sum = above + below + left + right
+    neighbor_sum = above_sum + below + left + right
     return neighbor_sum
 
 def check_bounds_column(index):

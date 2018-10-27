@@ -7,7 +7,9 @@ from sys import argv
 from random import randint
 import json
 
-from . import config
+from game import config
+
+
 
 def inject_pattern(gamefield, pattern):
     """
@@ -25,6 +27,8 @@ def inject_pattern(gamefield, pattern):
         count += 1
     return gamefield
 
+
+
 def get_pattern(filename):
     """
     Create 2d gamefield from file
@@ -33,6 +37,8 @@ def get_pattern(filename):
     with open(file_path, "r") as fh:
         pattern = json.load(fh)
     return pattern
+
+
 
 def startvalues_fromfile(filename):
     """
@@ -48,11 +54,15 @@ def startvalues_fromfile(filename):
     else:
         return inject_pattern(create_2dlist(), pattern)
 
+
+
 def create_2dlist():
     """
     create 2d list used for gamefield
     """
     return [[0 for i in range(config.NR_COLS)] for j in range(config.NR_ROWS)]
+
+
 
 def random_startvalues():
     """
@@ -67,14 +77,17 @@ def random_startvalues():
                 gamefield[row][col] = 1
     return gamefield
 
+
+
 def check_if_cmdinp():
     """
     Check if there is a commandline argument for reading patterns from file
     """
     if len(argv) > 1:
         return argv[-1]
-    else:
-        return ""
+    return ""
+
+
 
 def create_gamefield():
     """

@@ -12,13 +12,15 @@
 .DEFAULT_GOAL := test
 
 # Decide if use python3 or python
-py = python3
-ifeq (, $(@shell which python3))
+# ifeq (, $(@shell which python3))
+# 	py = python3
+# else
 	py = python
-endif
+# endif
 # Decide if use pip3 or pip
-pip = pip3
 ifeq (, $(@shell which pip3))
+	pip = pip3
+else
 	pip = pip
 endif
 
@@ -64,11 +66,27 @@ help:
 
 
 
+# target: run <pattern=pattern>   - Start game, game/logic.py. Optional argument with pattern
+.PHONY: run
+run:
+	@${py} -m game.logic ${pattern}
+
+
+
+# target: validate                - Validate code with pylint
+.PHONY: validate
+validate:
+	@pylint game tests \
+		&& $(ECHO) "$(OK_COLOR)Code is valid " "$(NO_COLOR)" \
+		|| $(ECHO) "$(ERROR_COLOR)Clean up your code!" "$(NO_COLOR)"
+
+
+
 # target: exec-tests              - Run tests in tests/runner.py with coverage.py
 .PHONY: exec-tests
-exec-tests:
+exec-tests: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/" "$(NO_COLOR)"
-	@cd tests && ${py} -m coverage run --rcfile=../.coveragerc runner.py \
+	@${py} -m coverage run tests/runner.py \
 		&& $(ECHO) "$(OK_COLOR)All tests passed " "$(NO_COLOR)" \
 		|| $(ECHO) "$(ERROR_COLOR)Tests faild" "$(NO_COLOR)"
 
@@ -77,14 +95,16 @@ exec-tests:
 # target: test                    - Run tests and display code coverage
 .PHONY: test
 test: exec-tests
-	@cd tests && ${py} -m coverage report --rcfile=../.coveragerc
+	echo "${py}"
+
+	${py} -m coverage report
 
 
 
 # target: test-html               - Run tests and display detailed code coverage with html
 .PHONY: test-html
 test-html: exec-tests
-	@cd tests && ${py} -m coverage html --rcfile=../.coveragerc && firefox coverage_html/index.html &
+	${py} -m coverage html && firefox tests/coverage_html/index.html &
 
 
 
@@ -93,7 +113,7 @@ test-html: exec-tests
 clean:
 	rm -rf game/__pycache__
 	rm -rf tests/__pycache__
-	rm tests/.coverage
+	rm -f .coverage
 	rm -rf tests/coverage_html
 
 

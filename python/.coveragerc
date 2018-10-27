@@ -1,11 +1,11 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-omit = */tests*
-
+source = game/
+omit =
+   *__init__.py
 
 [report]
-omit = */tests*
 show_missing = True
 
 # Regexes for lines to exclude from consideration
@@ -19,4 +19,4 @@ exclude_lines =
 # use "pragma: no cover" as comment to ignore code
 
 [html]
-directory = coverage_html
+directory = tests/coverage_html
