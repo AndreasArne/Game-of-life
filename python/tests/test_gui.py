@@ -4,8 +4,6 @@
 Tests the functions used to for the gui in turtle_gui.py.
 """
 from turtle import Turtle
-from sys import path
-import os
 import unittest
 
 from context import turtle_gui as gui

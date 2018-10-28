@@ -3,7 +3,7 @@
 Run test suites for game of life
 """
 import unittest
-from sys import exit
+import sys
 # import your test modules
 import test_create_gamefield
 import test_logic
@@ -23,4 +23,4 @@ runner = unittest.TextTestRunner(verbosity=3)
 result = runner.run(suite)
 
 # exit with status
-exit(not result.wasSuccessful())
+sys.exit(not result.wasSuccessful())

@@ -3,8 +3,6 @@
 """
 Tests the functions used to calculate Conway's game of life in logic.py
 """
-from sys import path
-import os
 import unittest
 
 from context import logic

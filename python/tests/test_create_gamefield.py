@@ -3,8 +3,7 @@
 """
 Tests the functions used to create the gamefield used in Conway's game of life
 """
-from sys import argv, path
-import os
+from sys import argv
 import unittest
 from context import create_gamefield as cg
 from context import config
