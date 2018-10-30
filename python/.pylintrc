@@ -2,8 +2,6 @@
 
 #init-hook='import sys; import os; sys.path.append(os.getcwd() + "/example/hello_world")'
 
-ignore-patterns=.*context.*
-
 [MESSAGES CONTROL]
 
 #disable=superfluous-parens,anomalous-backslash-in-string,bad-builtin,invalid-name

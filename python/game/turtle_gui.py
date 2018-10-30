@@ -90,7 +90,6 @@ def create_turtles(rows, cols):
     if rows < 0 or cols < 0:
         raise IndexError("Siez less than 0")
 
-    global TURTLES
     for x in range(rows):
         row = []
         for y in range(cols):

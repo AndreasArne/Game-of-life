@@ -5,6 +5,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+#pylint: disable=unused-import
 from game import logic
 from game import create_gamefield
 from game import turtle_gui

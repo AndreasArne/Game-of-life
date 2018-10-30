@@ -60,7 +60,7 @@ def create_2dlist():
     """
     create 2d list used for gamefield
     """
-    return [[0 for i in range(config.NR_COLS)] for j in range(config.NR_ROWS)]
+    return [[0 for _ in range(config.NR_COLS)] for _ in range(config.NR_ROWS)]
 
 
 

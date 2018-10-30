@@ -4,7 +4,7 @@ Run test suites for game of life
 """
 import unittest
 import sys
-# import your test modules
+
 import test_create_gamefield
 import test_logic
 import test_gui
