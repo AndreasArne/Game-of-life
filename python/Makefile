@@ -76,7 +76,7 @@ run:
 # target: validate                - Validate code with pylint
 .PHONY: validate
 validate:
-	@pylint3 --rcfile=./.pylintrc game tests \
+	@pylint --rcfile=./.pylintrc game tests \
 		&& $(ECHO) "$(OK_COLOR)Code is valid " "$(NO_COLOR)" \
 		|| $(ECHO) "$(ERROR_COLOR)Clean up your code!" "$(NO_COLOR)"
 

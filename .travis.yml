@@ -9,8 +9,7 @@ python:
 sudo: enabled
 
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install -y pylint3
+  - cd python && make install
 
 script:
   - cd python

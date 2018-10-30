@@ -49,10 +49,11 @@ def startvalues_fromfile(filename):
         config.NR_ROWS = len(pattern)
         config.NR_COLS = len(pattern[0])
         return pattern
-    elif len(pattern) != len(pattern[0]) and (len(pattern) > config.NR_ROWS or len(pattern[0]) > config.NR_COLS):
+
+    if len(pattern) != len(pattern[0]) and (len(pattern) > config.NR_ROWS or len(pattern[0]) > config.NR_COLS):
         raise ValueError("Pattern does not have same size and is bigger than gamefield")
-    else:
-        return inject_pattern(create_2dlist(), pattern)
+
+    return inject_pattern(create_2dlist(), pattern)
 
 
 
