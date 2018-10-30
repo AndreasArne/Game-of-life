@@ -3,7 +3,6 @@
 """
 Output a 2d json list to file to make it easier for creating patterns
 """
-import json
 from game import config
 
 def create_matrix(nr_rows, nr_cols):
@@ -19,19 +18,15 @@ def write_to_file(matrix, name):
     """
     file_path = config.PATTERN_PATH + "/{}.json".format(name)
     with open(file_path, "w") as fh:
-        json.dump(matrix, fh)
+        fh.write(matrix)
 
-def format():
+def insert_newline(matrix):
     """
-    Format json with newlines
+    Format matrix with newlines adter each sub list
     """
-    pass
-
-def insert_newline():
-    """
-    Insert newline after each list
-    """
-    pass
+    s_matrix = str(matrix)
+    matrix = s_matrix.replace("], ", "],\n")
+    return matrix
 
 def start():
     """
@@ -42,8 +37,9 @@ def start():
     filename = input("What is the name of the pattern? ")
 
     matrix = create_matrix(rows, cols)
+    matrix = insert_newline(matrix)
     write_to_file(matrix, filename)
-    print("File {} is now created in " + config.PATTERN_PATH + "/ for you to fill in a pattern!".format(filename))
+    print("File {}.json is now created in ".format(filename) + config.PATTERN_PATH + "/ for you to fill in a pattern!")
 
 if __name__ == "__main__":
     start()
