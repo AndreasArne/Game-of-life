@@ -12,11 +12,11 @@
 .DEFAULT_GOAL := test
 
 # Decide if use python3 or python
-# ifeq (, $(@shell which python3))
-# 	py = python3
-# else
+ifeq (, $(@shell which python3))
+	py = python3
+else
 	py = python
-# endif
+endif
 # Decide if use pip3 or pip
 ifeq (, $(@shell which pip3))
 	pip = pip3
@@ -111,6 +111,7 @@ test-html: exec-tests
 # target: clean                   - Remove all generated files
 .PHONY: clean
 clean:
+	rm -rf __pycache__
 	rm -rf game/__pycache__
 	rm -rf tests/__pycache__
 	rm -f .coverage
