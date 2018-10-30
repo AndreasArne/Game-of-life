@@ -9,11 +9,9 @@ python:
 sudo: enabled
 
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install python-tk xvfb
   - cd python
-  - make install
+  - make install-travis
 
 script:
   - make validate
-  - xvfb-run python3 -m coverage run tests/runner.py
+  - xvfb-run make exec-tests

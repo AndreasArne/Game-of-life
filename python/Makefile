@@ -95,8 +95,6 @@ exec-tests: clean
 # target: test                    - Run tests and display code coverage
 .PHONY: test
 test: exec-tests
-	echo "${py}"
-
 	${py} -m coverage report
 
 
@@ -123,3 +121,11 @@ clean:
 .PHONY: install
 install:
 	${pip} install -r requirements.txt
+
+
+
+# target: install-travis           - Install all packages for Travis
+.PHONY: install-travis
+install-travis: install
+	sudo apt-get update
+	sudo apt-get install python-tk xvfb
