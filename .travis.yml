@@ -1,0 +1,7 @@
+language: python
+rvm:
+ - 3.7
+
+script:
+  - cd python && make validate
+  - cd python && make exec-tests
